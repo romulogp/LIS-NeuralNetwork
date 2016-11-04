@@ -13,8 +13,6 @@ import org.neuroph.util.TransferFunctionType;
 
 public class LISNet {
     
-    
-    
     static interface Naipe {
         int QUANTIDADE = 4;
         double OUROS = 1;
@@ -41,63 +39,56 @@ public class LISNet {
     }
     
     public static void main(String[] args) {
+        int inputSize = 4;
+        int outputSize = 3;
         
-        int inputSize = (Naipe.QUANTIDADE + Carta.QUANTIDADE) * 5;
-        DataSet trainingSet = new DataSet(inputSize, 9);
-        File file = new File("poker.txt");
-        try(
-            BufferedReader reader = new BufferedReader(new FileReader(file))
-        ) {
-            for(String s = reader.readLine(); s != null; s = reader.readLine()) {
-                //Pega valores da string separados por vírgula
-                String[] values = s.split(",");
+        DataSet trainingSet = new DataSet(inputSize, outputSize);
+        File file = new File("LIS.TRN");
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            for (int i = 0; i < 90; i ++) {
+                
                 //Criação do array de entradas
                 double[] inputs = new double[inputSize];
-                int cont = 0;
-                for(int i = 0; i < values.length - 1; i++) {
-                    inputs[cont + Integer.parseInt(values[i]) - 1] = 1.0;
-                    cont += i % 2 == 0 ? Naipe.QUANTIDADE : Carta.QUANTIDADE;
-                }
+                inputs[0] = Double.parseDouble(reader.readLine());
+                inputs[1] = Double.parseDouble(reader.readLine());
+                inputs[2] = Double.parseDouble(reader.readLine());
+                inputs[3] = Double.parseDouble(reader.readLine());
+                
                 //Criação do array de saídas
-                double[] output = new double[9]; 
-                int activation = Integer.parseInt(values[values.length - 1]);
-                if(activation > 0) { output[activation - 1] = 1.0; }
-                //System.out.println(Arrays.toString(inputs) + "  - " + Arrays.toString(output));
+                double[] outputs = new double[outputSize];
+                outputs[0] = Double.parseDouble(reader.readLine());
+                outputs[1] = Double.parseDouble(reader.readLine());
+                outputs[2] = Double.parseDouble(reader.readLine());
+                
+                System.out.println(Arrays.toString(inputs) + "  - " + Arrays.toString(outputs));
+                
                 //Adição do registro de treinamento
-                trainingSet.addRow(new DataSetRow(inputs, output));
+                trainingSet.addRow(new DataSetRow(inputs, outputs));
             }
         } catch(IOException ex) {
-            
+            System.out.println("Error reading file.");
         }
-
-        MomentumBackpropagation backPropagation = new MomentumBackpropagation();
-        backPropagation.setMomentum(0.3);
-        backPropagation.setMaxIterations(5000);
-        backPropagation.setMaxError(0.01);
-        backPropagation.setLearningRate(0.1);
         
-        MultiLayerPerceptron perceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, 85, 20, 9);
+        System.out.println("Lines read: " + trainingSet.getRows().size());
+        
+        MomentumBackpropagation backPropagation = new MomentumBackpropagation();
+        backPropagation.setMomentum(0.03);
+        backPropagation.setMaxIterations(10000);
+        backPropagation.setMaxError(0.01);
+        backPropagation.setLearningRate(0.01);
+        
+        MultiLayerPerceptron perceptron = new MultiLayerPerceptron(TransferFunctionType.SIN, inputSize, 4, outputSize);
         perceptron.setLearningRule(backPropagation);
         perceptron.learn(trainingSet);
-        
-        perceptron.save("pokerNet5.nnet");
-        System.out.println("saved");
+//        
+        perceptron.save("lis.nnet");
+        System.out.println("Network saved");
         
         
         //Utilizar a rede depois de salva
         //NeuralNetwork perceptron = MultiLayerPerceptron.createFromFile("pokerNet5.nnet"); 
-        perceptron.setInput(
-            0, 0, 0, 1,
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 1, 0,
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 1,
-            0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 1,
-            0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 1, 0, 0,
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        );
+        perceptron.setInput(5.5, 2.4, 3.7, 1.0);
         perceptron.calculate();
         System.out.println(" Output: " + Arrays.toString(perceptron.getOutput()));
     }

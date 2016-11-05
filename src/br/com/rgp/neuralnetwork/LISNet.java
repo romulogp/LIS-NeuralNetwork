@@ -1,4 +1,4 @@
-package neuralnetwork;
+package br.com.rgp.neuralnetwork;
 
 import java.io.BufferedReader;
 import java.io.File;

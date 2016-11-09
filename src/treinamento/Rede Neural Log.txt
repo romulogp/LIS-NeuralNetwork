@@ -1,0 +1,69 @@
+NNet02
+
+backPropagation.setMomentum(0.03);
+backPropagation.setMaxIterations(10000);
+backPropagation.setMaxError(0.01);
+backPropagation.setLearningRate(0.01);
+
+MultiLayerPerceptron perceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputSize, 4, outputSize);
+
+Erros: 0
+0% a 10% 	0%
+10% a 20% 	0%
+20% a 30% 	0%
+30% a 40% 	0%
+40% a 50% 	0%
+50% a 60% 	0%
+60% a 70% 	5%
+70% a 80% 	2%
+80% a 90% 	7%
+90% a 100% 	87%
+
+
+NNet03
+
+backPropagation.setMomentum(0.1);
+backPropagation.setMaxIterations(10000);
+backPropagation.setMaxError(0.01);
+backPropagation.setLearningRate(0.1);
+
+MultiLayerPerceptron perceptron = new MultiLayerPerceptron(TransferFunctionType.SIGMOID, inputSize, 4, outputSize);
+
+Erros: 0
+0% a 10% 	0%
+10% a 20% 	0%
+20% a 30% 	0%
+30% a 40% 	0%
+40% a 50% 	2%
+50% a 60% 	0%
+60% a 70% 	0%
+70% a 80% 	2%
+80% a 90% 	3%
+90% a 100% 	93%
+
+Aumentando o nº de iterações para 100000 gerou:
+Erros: 0
+0% a 10% 	0%
+10% a 20% 	0%
+20% a 30% 	0%
+30% a 40% 	0%
+40% a 50% 	0%
+50% a 60% 	2%
+60% a 70% 	0%
+70% a 80% 	3%
+80% a 90% 	0%
+90% a 100% 	95%
+
+Reduzindo para 3 camadas escondidas
+
+Erros: 0
+0% a 10% 	0%
+10% a 20% 	0%
+20% a 30% 	0%
+30% a 40% 	0%
+40% a 50% 	0%
+50% a 60% 	0%
+60% a 70% 	0%
+70% a 80% 	0%
+80% a 90% 	42%
+90% a 100% 	58%

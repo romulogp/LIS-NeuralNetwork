@@ -29,6 +29,7 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 public class MainWindow extends javax.swing.JFrame {
     
     private int executionTime = 0;
+    private final String TRAINED_FILE_NAME = "lis.nnet";
     
     /**
      * Creates new form NeuralNetworkMainWindow
@@ -253,7 +254,7 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Os dados informados estão incorretos.");            
         }
         
-        NeuralNetwork perceptron = MultiLayerPerceptron.createFromFile("lis.nnet"); 
+        NeuralNetwork perceptron = MultiLayerPerceptron.createFromFile(TRAINED_FILE_NAME); 
         perceptron.setInput(inputs);
         perceptron.calculate();
         double[] outputs = perceptron.getOutput();

@@ -1,4 +1,4 @@
-package samples;
+package br.com.rgp.neuralnetwork.trainning;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +14,7 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TransferFunctionType;
 
-public class LISNet {
+public class LISTrainningNet {
 
     public static void main(String[] args) {
         int inputSize = 4;

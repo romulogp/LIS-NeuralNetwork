@@ -272,7 +272,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .append("\n")
                 .append("Espécie: ").append(activeSpecie.getDescricao())
                 .append("\n")
-                .append("Confiabilidade: ").append(Math.round(outputs[activeSpecie.ordinal()] * 100)).append("%");
+                .append("Confiabilidade: ").append(String.format("%.6f", outputs[activeSpecie.ordinal()] * 100)).append("%");
         
         jTextAreaResultado.setText(builder.toString());
         
